@@ -1,16 +1,20 @@
-import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
-import NavBar from "./components/NavBar/NavBar";
-import Hero from "./components/Hero/Hero";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Layout } from "./layouts";
+import { PublicRouter } from "./router";
+import { CartProvider } from "./context";
+import { LoginRouter } from "./router/LoginRouter";
 
 function App() {
-  
-
+  const isUserConnected = localStorage.getItem("isUserConnected");
   return (
-    <>
-      <NavBar></NavBar>
-      <Hero></Hero>
-    </>
-  )
+    <CartProvider>
+      <ChakraProvider>
+        <Layout>
+          {isUserConnected === "true" ? <PublicRouter /> : <LoginRouter />}
+        </Layout>
+      </ChakraProvider>
+    </CartProvider>
+  );
 }
 
-export default App
+export default App;

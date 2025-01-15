@@ -1,15 +1,21 @@
-import cart from './assets/cart.svg'
-import { Badge, HStack } from '@chakra-ui/react'
+import { useContext } from 'react'
+import { Flex } from '@chakra-ui/react'
+import { CartContext } from '../../context'
+import { CiShoppingCart } from 'react-icons/ci'
+import { Link } from 'react-router-dom'
 
-const CartWidget = () => {
+export const CartWidget = () => {
+
+  const { cartState } = useContext(CartContext)
+
+  const totalItems = cartState.reduce((aux, item) => aux + item.quantity, 0)
+
   return (
-    <HStack spacing='5px'>
-      <img src={cart} alt='cart' width='25px' />
-      <Badge colorScheme='green' variant='solid' borderRadius='10px' fontSize='15px' px={2}>
-        0
-      </Badge>
-    </HStack>
+    <Link to="/checkout">
+      <Flex alignItems={"center"} justifyContent={"center"} p={2} borderRadius={"50%"} bg={"gray.200"} color={"gray.800"}>
+        <CiShoppingCart size="1.5em" />
+        <span>{totalItems}</span>
+      </Flex>
+    </Link>
   )
 }
-
-export default CartWidget

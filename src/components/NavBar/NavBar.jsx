@@ -1,84 +1,84 @@
+import { Link } from "react-router-dom";
+
 import {
   Box,
   Flex,
   Avatar,
-  Text,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
-  HStack,
   useColorMode,
   Center,
-  Heading,
-  Image,
-  Input,
-} from '@chakra-ui/react'
-import { MoonIcon, SunIcon, ChevronDownIcon } from '@chakra-ui/icons'
+} from "@chakra-ui/react";
+import { MoonIcon, SunIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
-import CartWidget from "../CartWidget/CartWidget"
+import { useGetAllProducts } from "../../hooks/useGetAllProducts";
 
-import candy from '../../assets/candy.png'
+import { CartWidget } from "../index";
+// import { createProductsFirestore } from "../../helpers";
 
-export default function NavBar() {
-  const { colorMode, toggleColorMode } = useColorMode()
-  // const { isOpen, onOpen, onClose } = useDisclosure()
+export const NavBar = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  const { items } = useGetAllProducts("categories");
+
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-
-          <Flex alignItems={'center'} justifyContent={'left'}>
-            <Image src={candy} alt="candy-image" boxSize="30px" />
-            <Heading as='h2' size='md'>Maxikiosco</Heading>
-          </Flex>
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <Box>
+            <Link to="/">Store</Link>
+          </Box>
 
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-              Categorías
+              Categorias
             </MenuButton>
-            <MenuList>
-              <MenuItem>Chocolates</MenuItem>
-              <MenuItem>Chicles</MenuItem>
-              <MenuItem>Bebidas</MenuItem>
-              <MenuItem>Galletas</MenuItem>
-              <MenuItem>Cigarrillos</MenuItem>
+            <MenuList height={"300px"} overflowY={"scroll"}>
+              {items.map((category) => {
+                return (
+                  <MenuItem key={category.slug}>
+                    <Link to={`/category/${category.slug}`}>
+                      {category.name}
+                    </Link>
+                  </MenuItem>
+                );
+              })}
             </MenuList>
           </Menu>
 
-          <Flex alignItems={'center'}>
+          {/* <Button onClick={()=> createProductsFirestore("categories")}>Agregar Productos</Button> */}
 
-            <Stack direction={'row'} spacing={6} alignItems={'center'}>
-              <CartWidget />
-
+          <Flex alignItems={"center"}>
+            <CartWidget />
+            <Stack direction={"row"} spacing={7}>
               <Button onClick={toggleColorMode}>
-                {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
-
               <Menu>
                 <MenuButton
                   as={Button}
-                  rounded={'full'}
-                  variant={'link'}
-                  cursor={'pointer'}
-                  minW={0}>
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
                   <Avatar
-                    name='Dan Abramov'
-                    src='https://bit.ly/dan-abramov'
+                    size={"sm"}
+                    src={"https://avatars.dicebear.com/api/male/username.svg"}
                   />
                 </MenuButton>
-                <MenuList alignItems={'center'}>
+                <MenuList alignItems={"center"}>
                   <br />
                   <Center>
                     <Avatar
-                      size='2xl'
-                      name='Dan Abramov'
-                      src='https://bit.ly/dan-abramov'
+                      size={"2xl"}
+                      src={"https://avatars.dicebear.com/api/male/username.svg"}
                     />
                   </Center>
                   <br />
@@ -87,10 +87,9 @@ export default function NavBar() {
                   </Center>
                   <br />
                   <MenuDivider />
-                  <MenuItem>Mis compras</MenuItem>
-                  <MenuItem>Mi perfil</MenuItem>
-                  <MenuDivider />
-                  <MenuItem>Cerrar sesion</MenuItem>
+                  <MenuItem>Your Servers</MenuItem>
+                  <MenuItem>Account Settings</MenuItem>
+                  <MenuItem>Logout</MenuItem>
                 </MenuList>
               </Menu>
             </Stack>
@@ -98,6 +97,5 @@ export default function NavBar() {
         </Flex>
       </Box>
     </>
-  )
-}
-
+  );
+};

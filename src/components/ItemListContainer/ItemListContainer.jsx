@@ -1,10 +1,12 @@
+import { Flex } from "@chakra-ui/react";
+import { ItemCard } from "../index";
 
-const ItemListContainer = ({greeting}) => {
+export const ItemListContainer = ({ products }) => {
   return (
-    <div>
-      <h1>{greeting}</h1>
-    </div>
-  )
-}
-
-export default ItemListContainer
+    <Flex wrap={"wrap"} width={"100%"}>
+      {products.map((product) => {
+        return <ItemCard key={product.id} data={product} />;
+      })}
+    </Flex>
+  );
+};

@@ -35,8 +35,7 @@ export default function Hero() {
             </Text>{' '}
           </Heading>
           <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
-            The project board is an exclusive resource for contract work. It&apos;s
-            perfect for freelancers, agencies, and moonlighters.
+            Trabajamos todos los días del año para brindarte la mejor calidad y atención pero siempre, con los mejores precios.
           </Text>
           <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
             <Button
@@ -46,9 +45,9 @@ export default function Hero() {
               _hover={{
                 bg: 'blue.500',
               }}>
-              Create Project
+              Quiero ver más !
             </Button>
-            <Button rounded={'full'}>How It Works</Button>
+            <Button rounded={'full'}>Ver promos</Button>
           </Stack>
         </Stack>
       </Flex>
